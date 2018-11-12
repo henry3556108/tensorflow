@@ -16,7 +16,7 @@ a = tf.matmul(x,w1)
 y = tf.matmul(a,w2)
 
 cross_entropy = -(tf.reduce_mean(y_ * tf.log(tf.clip_by_value(y,1e-10,1.0))))
-trainstep = tf.train.AdadeltaOptimizer(0.1).minimize(cross_entropy)
+trainstep = tf.train.AdadeltaOptimizer(3.5).minimize(cross_entropy)
 rdm = RandomState(1)
 dataset_size=128
 
