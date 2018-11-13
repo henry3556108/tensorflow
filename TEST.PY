@@ -1,4 +1,6 @@
 import tensorflow as tf
-ls=[1,2,3,4,20]
+var=tf.Variable(20)
+init = tf.initialize_all_variables()
 sess=tf.Session()
-print(sess.run(tf.reduce_mean(a)))
+sess.run(init)
+print(sess.run(var))
