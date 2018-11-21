@@ -64,6 +64,8 @@ def train(mnist):
 def main():
     mnist = input_data.read_data_sets("C:\\Users\\user\\Documents\\GitHub\\tensorflow",one_hot=True)
     train(mnist)
+    saver = tf.train.Saver()
+    saver.export_meta_graph("C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\model.ckpt.meta.jason",as_text = True)
 
 
 if __name__ == '__main__':
