@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\test-model.ckpt"
+all_model_checkpoint_paths: "C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\test-model.ckpt"

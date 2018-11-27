@@ -1,6 +1,5 @@
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
-mnist = input_data.read_data_sets("C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3",one_hot=True)
 input_node = 784 #這個是每張mnist數字的像素 28*28
 output_node = 10 #我們要將圖片分類成0~9 總共十項
 layer1_node= 500 #這個是隱藏層的節點 總共有500個
@@ -8,7 +7,7 @@ batch_size = 100 #每次訓練有100筆資料進去
 learning_rate_base = 0.8 #一開始的學習率
 learning_rate_decay = 0.99 #學習率的衰減 一開始接近1 越到後面會越小 控制學習率 避免overfitting
 regularization_rate = 0.0001 # 這是正規化的lambda
-training_steps = 31000 # 訓練量
+training_steps = 1000 # 訓練量
 moving_average_decay = 0.99 #滑動平均衰減率
 
 def interface(input_tensor,avg_class,weight1,basies1,weight2,basies2,):
@@ -60,12 +59,13 @@ def train(mnist):
         test_correct = sess.run(accuracy, feed_dict = test_feed)
         print('經過了{}次之後 正確率來到了{}'.format(training_steps,test_correct))
         print('weight1是: ',sess.run(weight1),'\nweight2是: ',sess.run(weight2))
+        saver = tf.train.Saver()
+        # saver.export_meta_graph("C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\model.ckpt",as_text = True)
+        saver.save(sess, 'C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\test-model.ckpt')
 
 def main():
     mnist = input_data.read_data_sets("C:\\Users\\user\\Documents\\GitHub\\tensorflow",one_hot=True)
     train(mnist)
-    saver = tf.train.Saver()
-    saver.export_meta_graph("C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\model.ckpt.meta.jason",as_text = True)
 
 
 if __name__ == '__main__':
