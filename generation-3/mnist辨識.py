@@ -7,7 +7,7 @@ batch_size = 100 #每次訓練有100筆資料進去
 learning_rate_base = 0.8 #一開始的學習率
 learning_rate_decay = 0.99 #學習率的衰減 一開始接近1 越到後面會越小 控制學習率 避免overfitting
 regularization_rate = 0.0001 # 這是正規化的lambda
-training_steps = 1000 # 訓練量
+training_steps = 3000 # 訓練量
 moving_average_decay = 0.99 #滑動平均衰減率
 
 def interface(input_tensor,avg_class,weight1,basies1,weight2,basies2,):
@@ -26,9 +26,7 @@ def train(mnist):
     basies1 = tf.Variable(tf.constant(0.1,shape = [layer1_node]))
     weight2 = tf.Variable(tf.truncated_normal([layer1_node,output_node],stddev = 0.1))
     basies2 = tf.Variable(tf.constant(0.1,shape=[output_node]))
-    
     y=interface(x,None,weight1,basies1,weight2,basies2)
-
     global_step = tf.Variable(0,trainable = False )# 控制平滑衰減率 decay= min（decay，（1+steps）/（10+steps））
     variable_average = tf.train.ExponentialMovingAverage(moving_average_decay,global_step) #滑動平均模型的函式
     variable_average_op = variable_average.apply(tf.trainable_variables()) #將所有trainable的值都丟進去這個滑動平均裡面=>看interface的else
@@ -41,7 +39,6 @@ def train(mnist):
     learning_rate = tf.train.exponential_decay(learning_rate_base,global_step,mnist.train.num_examples/batch_size,learning_rate_decay) #　這個是控制學習率的衰減　需要給他初值　訓練的起點終點　學習率的衰減率
     train_step = tf.train.AdadeltaOptimizer(learning_rate=learning_rate).minimize(loss,global_step=global_step) #在這裡定義我們的模型是甚麼
     train_op = tf.group(train_step,variable_average_op) # 讓他一次完成多個操作 可以反向傳播優化 又可以取滑動平均值  
-
     # 這邊在計算它的正確率
     correct_pridict = tf.equal(tf.argmax(average_y,1),tf.argmax(_y,1))
     accuracy =tf.reduce_mean(tf.cast(correct_pridict,tf.float32))
@@ -58,7 +55,7 @@ def train(mnist):
             sess.run(train_op,feed_dict = {x : xs,_y : ys})
         test_correct = sess.run(accuracy, feed_dict = test_feed)
         print('經過了{}次之後 正確率來到了{}'.format(training_steps,test_correct))
-        print('weight1是: ',sess.run(weight1),'\nweight2是: ',sess.run(weight2))
+        # print('weight1是: ',sess.run(weight1),'\nweight2是: ',sess.run(weight2))
         saver = tf.train.Saver()
         # saver.export_meta_graph("C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\model.ckpt",as_text = True)
         saver.save(sess, 'C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-3\\test-model.ckpt')

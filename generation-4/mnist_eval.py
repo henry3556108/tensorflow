@@ -22,17 +22,16 @@ def evaluate(mnist):
                 ckpt = tf.train.get_checkpoint_state(mnist_train.model_path)
                 c = ckpt.all_model_checkpoint_paths
                 for i in c:
-                        try:
-                                # print('hey')
-                                saver.restore(sess,i)
-                                # print(ckpt and ckpt.model_checkpoint_path)
-                                time.sleep(eval_sec)
-                                global_step = i.split('-')[-1]
-                                accuracy_score = sess.run(accuracy,feed_dict = v_feed)
-                                print('after {} correct {}'.format(global_step,accuracy_score))
-                        except:
-                                print('no check point found')
-                                time.sleep(eval_sec)
+                        # try:
+                        saver.restore(sess,i)
+                        time.sleep(eval_sec)
+                        global_step = i.split('-')[-1]
+                        accuracy_score = sess.run(accuracy,feed_dict = v_feed)
+                        print('after {} correct {}'.format(global_step,accuracy_score))
+                        # except:
+                                # print('no check point found')
+                        
+                                # time.sleep(eval_sec)
 def main(argv=None):
     mnist = input_data.read_data_sets('C:\\Users\\user\\Documents\\GitHub\\tensorflow\\generation-4\\mnist_data',one_hot=True)
     evaluate(mnist)
