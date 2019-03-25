@@ -1,5 +1,6 @@
 import tensorflow as tf
 
+
 input_node = 784 #這個是每張mnist數字的像素 28*28
 output_node = 10 #我們要將圖片分類成0~9 總共十項
 layer1 = 500 #這個是隱藏層的節點 總共有500個
