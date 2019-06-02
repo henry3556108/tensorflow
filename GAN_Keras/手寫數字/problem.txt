@@ -1,0 +1,16 @@
+keras.layers Input?? => 這個怎麼用 幹嘛用的
+trainable => 這個要在更清楚一點
+
+validity => 這個是要幹嘛的
+combined => 組合model?
+np.prod => 這個是甚麼?
+
+
+train discriminator => 不太懂
+
+D-model 加了BatchNormalization 後會出現訓練不起來的情況
+D-model 有了四層隱藏層厚 前400次的訓練出現了白底黑字的情況
+D-model 一開始變得太聰明好像沒有辦法很好的generator出來東西
+G-model 訓練了10萬次後幾乎只能產出1這個數字
+
+
